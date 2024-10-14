@@ -53,28 +53,93 @@ ORDER BY year ASC, month ASC;
 
 -- A list of the top 5 US states by number of invoices
 -- Hint: You'll need to filter the results with WHERE billing_country = 'USA'
+SELECT billing_state, COUNT(*) AS invoice_count
+FROM invoices
+WHERE billing_country = 'USA'
+GROUP BY billing_state
+ORDER BY invoice_count DESC
+LIMIT 5;
 
 -- A list of the top 5 US states by gross sales
+SELECT state, SUM(gross_sales) as total_sales
+FROM sales
+WHERE country = 'US'
+GROUP BY state
+ORDER BY total_sales DESC
+LIMIT 5;
 
 -- A list of the top 5 US states by average invoice size
+SELECT state, AVG(total) as avg_invoice_size
+FROM invoices
+WHERE billing_country = 'USA'
+GROUP BY state
+ORDER BY avg_invoice_size DESC
+LIMIT 5;
 
 -- A list of the top 10 US cities by number of invoices
+SELECT city, COUNT(*) as number_of_invoices
+FROM invoices
+WHERE country = 'US'
+GROUP BY city
+ORDER BY number_of_invoices DESC
+LIMIT 10;
 
 -- A list of the top 10 US cities by gross sales
+SELECT city, SUM(total) as gross_sales  
+FROM invoices
+WHERE country = 'US'
+GROUP BY city
+ORDER BY gross_sales DESC
+LIMIT 10;
 
 -- A list of the top 10 US cities by average invoice size
+SELECT city, AVG(total) as avg_invoice_size
+FROM invoices
+WHERE country = 'US'
+GROUP BY city
+ORDER BY avg_invoice_size DESC
+LIMIT 10;
+
 
 -- A list of the top 3 cities in California by number of invoices
 -- Hint: You'll need a WHERE clause filtering by both billing_country and billing_state
+SELECT city, COUNT(*) as number_of_invoices
+FROM invoices
+WHERE billing_country = 'USA' AND billing_state = 'CA'
+GROUP BY city
+ORDER BY number_of_invoices DESC
+LIMIT 3;
 
 -- A list of the top 3 cities in California by gross sales
+SELECT city, SUM(total) as gross_sales
+FROM invoices
+WHERE billing_country = 'USA' AND billing_state = 'CA'
+GROUP BY city
+ORDER BY gross_sales DESC
+LIMIT 3;
 
 -- A list of the top 3 cities in California by average invoice size
+SELECT city, AVG(total) as avg_invoice_size
+FROM invoices
+WHERE billing_country = 'USA' AND billing_state = 'CA'
+GROUP BY city
+ORDER BY avg_invoice_size DESC
+LIMIT 3;
 
 
 -- "customers" table
 -- Remember: run ".schema customers" to see what fields (columns) the customers table contains.
 
 -- A list of the top 3 countries by total number of customers
+SELECT country, COUNT(*) as number_of_customers
+FROM customers
+GROUP BY country
+ORDER BY number_of_customers DESC
+LIMIT 3;
 
 -- A list of the top 7 cities (anywhere) by total number of customers
+SELECT city, COUNT(*) as number_of_customers
+FROM customers
+GROUP BY city
+ORDER BY number_of_customers DESC
+LIMIT 7;
